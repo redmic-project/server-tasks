@@ -1,0 +1,27 @@
+{
+	"date": {
+		"columns": [
+			"Date"
+		],
+		"format": "dd-MM-yyyy HH:mm"
+	},
+	"pointGeometry": {
+		"columns": [
+			"colX",
+			"colY"
+		]
+	},
+	"device": {
+		"device": 10
+	},
+	"qFlag": {
+		"columns": [
+			"QFlag"
+		]
+	},
+	"vFlag": {
+		"columns": [
+			"VFlag"
+		]
+	}
+}

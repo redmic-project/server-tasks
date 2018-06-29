@@ -1,0 +1,18 @@
+{
+	"date": {
+		"columns": ["Date"],
+		"format": "YYYY/MM/DD"
+	},
+	"parameters": {
+		"matching": [{
+			"columns": ["Temp"],
+			"dataDefinitionId": 11
+		}]
+	},
+	"qFlag": {
+		"columns": ["col1"]
+	},
+	"vFlag": {
+		"columns": ["VFlag"]
+	}
+}

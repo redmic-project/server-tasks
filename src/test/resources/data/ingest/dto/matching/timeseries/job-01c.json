@@ -1,0 +1,10 @@
+{
+	"parameters": {
+		"matching": [{
+			"dataDefinitionId": 4,
+			"columns": [
+				"Turbidez"
+			]
+		}]
+	}
+}

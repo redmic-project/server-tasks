@@ -1,0 +1,32 @@
+version: '3.5'
+
+services:
+  tasks:
+    image: registry.redmic.net/redmic-server/${MICROSERVICE_NAME}:${IMAGE_TAG:-latest}
+    environment:
+      - SPRING_PROFILES_ACTIVE
+      - JAVA_OPTS=-Xmx1g -Xss1g
+    networks:
+      - elastic-net
+      - kafka-net
+      - postgres-net
+      - redmic-net
+    volumes:
+      - mediastorage-private-vol:/data/MEDIA_STORAGE
+      - mediastorage-public-vol:/data/PUBLIC_MEDIA_STORAGE
+    healthcheck:
+      test: wget --spider -S -t 3 http://localhost:${MICROSERVICE_PORT}/api/${MICROSERVICE_NAME}/actuator/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 2m
+
+networks:
+  elastic-net:
+    external: true
+  kafka-net:
+    external: true
+  postgres-net:
+    external: true
+  redmic-net:
+    external: true

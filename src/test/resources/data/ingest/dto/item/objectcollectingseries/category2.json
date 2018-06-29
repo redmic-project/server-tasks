@@ -1,0 +1,28 @@
+{
+	"name": "Basura - Origen",
+	"id": 9,
+	"classification": [
+		{
+			"id": 57,
+			"objectType": {
+				"path": "root.125.65",
+				"code": null,
+				"level": 2,
+				"name": "Vasos, Tazas, Copas",
+				"name_en": "Cup..",
+				"id": 165
+			}
+		},
+		{
+			"id": 57,
+			"objectType": {
+				"path": "root.125",
+				"code": null,
+				"level": 1,
+				"name": "PAPEL / CARTÓN",
+				"name_en": "Paper, paperboard",
+				"id": 225
+			}
+		}
+	]
+}

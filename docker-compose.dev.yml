@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  tasks:
+    container_name: ${MICROSERVICE_NAME}
+    restart: on-failure:3
+    ports:
+      - ${MICROSERVICE_PORT}:${MICROSERVICE_PORT}
+
+volumes:
+  mediastorage-private-vol:
+    name: mediastorage-private-vol
+  mediastorage-public-vol:
+    name: mediastorage-public-vol

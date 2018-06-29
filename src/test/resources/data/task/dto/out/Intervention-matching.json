@@ -1,0 +1,57 @@
+{
+	"id": "1478096233586",
+	"status": "waitingIntervention",
+	"progress": null,
+	"userId": 10,
+	"taskType": "ingest",
+	"taskName": "ingest-data-timeseries",
+	"taskResult": null,
+	"interventionDescription": {
+		"type": "matching",
+		"file": "filename.csv",
+		"requiredFields": [
+			"date",
+			"value"
+		],
+		"data": [
+			{
+				"date": "2010/10/20",
+				"value": "23"
+			}
+		],
+		"matching": [
+			{
+				"type": "Date",
+				"field": "date",
+				"columns": [
+					"Fecha"
+				],
+				"format": "YYYY/MM/DD"
+			},
+			{
+				"type": "Parameter",
+				"field": "value",
+				"columns": null,
+				"dataDefinitionId": null
+			},
+			{
+				"type": "QualityControl",
+				"field": "qFlag",
+				"columns": null
+			},
+			{
+				"type": "QualityControl",
+				"field": "vFlag",
+				"columns": null
+			},
+			{
+				"type": "Other",
+				"field": "remark",
+				"columns": null
+			}
+		]
+	},
+	"startDate": "2016-11-02T14:17:12.524+00:00",
+	"endDate": null,
+	"updated": "2016-11-02T14:17:12.524+00:00"
+}

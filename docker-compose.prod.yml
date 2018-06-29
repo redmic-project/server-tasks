@@ -1,0 +1,34 @@
+version: '3.5'
+
+services:
+  tasks:
+    ports:
+      - ${MICROSERVICE_PORT}
+    networks:
+      - traefik-net
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        traefik.port: "${MICROSERVICE_PORT}"
+        traefik.docker.network: traefik-net
+        traefik.frontend.rule: PathPrefix:/api/${MICROSERVICE_NAME}
+        traefik.backend: ${MICROSERVICE_NAME}
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+
+networks:
+  traefik-net:
+    external: true
+
+volumes:
+  mediastorage-private-vol:
+    name: mediastorage-private-vol
+    driver: "cloudstor:aws"
+  mediastorage-public-vol:
+    name: mediastorage-public-vol
+    driver: "cloudstor:aws"

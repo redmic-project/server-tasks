@@ -1,0 +1,8 @@
+{
+	"data": {
+		"columns": [
+			"Fecha-Hora"
+		],
+		"format": "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"
+	}
+}

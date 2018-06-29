@@ -1,0 +1,28 @@
+{
+	"name": "Basura - OSPAR",
+	"id": 8,
+	"classification": [
+		{
+			"id": 99,
+			"objectType": {
+				"path": "root.127.82",
+				"code": null,
+				"level": 2,
+				"name": "Envases de comida",
+				"name_en": "Food container",
+				"id": 82
+			}
+		},
+		{
+			"id": 99,
+			"objectType": {
+				"path": "root.127",
+				"code": null,
+				"level": 1,
+				"name": "METAL",
+				"name_en": "Metal",
+				"id": 127
+			}
+		}
+	]
+}

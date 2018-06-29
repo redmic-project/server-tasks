@@ -1,0 +1,87 @@
+{
+	"id": "1478096233586",
+	"userId": 10,
+	"taskType": "ingest",
+	"taskName": "ingest-data-timeseries",
+	"taskResult": null,
+	"progress": null,
+	"lastUpdated": "2016-11-02T14:17:12.524+00:00",
+	"currentStep": 1,
+	"steps": [
+		{
+			"step": "step-1",
+			"status": "registered",
+			"date": "2016-11-02T14:17:12.524+00:00",
+			"parameters": {
+				"fileName": "timeseries.csv",
+				"delimiter": ";",
+				"activityId": "20",
+				"surveyId": "19"
+			}
+		},
+		{
+			"step": "step-2",
+			"status": "started",
+			"date": "2016-11-02T14:17:13.524+00:00"
+		},
+		{
+			"step": "step-3",
+			"status": "waitingIntervention",
+			"date": "2016-11-02T14:17:12.524+00:00",
+			"responseDate": "2016-11-02T14:18:12.524+00:00",
+			"interventionDescription": {
+				"type": "matching",
+				"requiredFields": [
+					"date",
+					"value"
+				],
+				"data": [
+					{
+						"date": "2010/10/20",
+						"value": "23"
+					}
+				],
+				"matching": {
+					"date": {
+						"columns": null,
+						"format": "YYYY/MM/DD"
+					},
+					"parameters": {
+						"matching": [{
+							"columns": null,
+							"dataDefinitiomnId": null
+						}]
+					},
+					"qFlag": {
+						"columns": null
+					},
+					"vFlag": {
+						"columns": null
+					},
+					"remark": {
+						"columns": null
+					}
+				}
+			},
+			"response": {
+				"type": "matching",
+				"matching": {
+					"date": {
+						"columns": [
+							"Fecha"
+						],
+						"format": "YYYY/MM/DD"
+					},
+					"parameters": {
+						"matching": [{
+							"columns": [
+								"Turbidez"
+							],
+							"dataDefinitionId": 19
+						}]
+					}
+				}
+			}
+		}
+	]
+}

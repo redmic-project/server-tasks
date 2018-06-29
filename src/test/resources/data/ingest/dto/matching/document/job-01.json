@@ -1,0 +1,52 @@
+{
+	"title": {
+		"columns": [
+			"title"
+		]
+	},
+	"code": {
+		"columns": [
+			"code"
+		]
+	},
+	"remark": {
+		"columns": [
+			"remark"
+		]
+	},
+	"author": {
+		"columns": [
+			"author"
+		]
+	},
+	"year": {
+		"columns": [
+			"year"
+		]
+	},
+	"source": {
+		"columns": [
+			"source"
+		]
+	},
+	"language": {
+		"columns": [
+			"language"
+		]
+	},
+	"keywords": {
+		"columns": [
+			"keywords"
+		]
+	},
+	"documentType": {
+		"columns": [
+			"documentType"
+		]
+	},
+	"url": {
+		"columns": [
+			"url"
+		]
+	}
+}

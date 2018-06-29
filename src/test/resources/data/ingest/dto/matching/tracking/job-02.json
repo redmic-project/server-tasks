@@ -1,0 +1,26 @@
+{
+	"date": {
+		"columns": [
+			"Fecha-Hora"
+		],
+		"format": "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"
+	},
+	"pointGeometry": {
+		"columns": [
+			"latitud", "longitud"
+		]
+	},
+	"device": {
+		"deviceId": 10
+	},
+	"qFlag": {
+		"columns": [
+			"qflag"
+		]
+	},
+	"vFlag": {
+		"columns": [
+			"vflag"
+		]
+	}
+}

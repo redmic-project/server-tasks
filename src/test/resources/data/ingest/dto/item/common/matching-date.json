@@ -1,0 +1,6 @@
+{
+	"type": "Date",
+	"field": "date",
+	"columns": ["col1"],
+	"format": "YYYY/MM/DD"
+}

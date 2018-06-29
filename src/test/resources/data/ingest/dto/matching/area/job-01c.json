@@ -1,0 +1,22 @@
+{
+	"name": {
+		"columns": [
+			"SITE_NAME"
+		]
+	},
+	"code": {
+		"columns": [
+			"SITE_CODE"
+		]
+	},
+	"description": {
+		"columns": [
+			"SITE_DESCRIPTION"
+		]
+	},
+	"remark": {
+		"columns": [
+			"SITE_REMARK"
+		]
+	}
+}

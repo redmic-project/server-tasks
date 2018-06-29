@@ -1,0 +1,174 @@
+{
+	"id": "1478096233586",
+	"status": "waitingIntervention",
+	"progress": null,
+	"userId": 10,
+	"taskType": "ingest",
+	"taskName": "ingest-data-timeseries",
+	"taskResult": null,
+	"interventionDescription": {
+		"type": "matching",
+		"data": [
+			{
+				"date": "2010/10/20",
+				"value": "10"
+			}
+		],
+		"requiredFields": [
+			"date",
+			"value"
+		],
+		"matching": {
+			"$schema": "http://json-schema.org/draft-04/schema#",
+			"title": "Time Series Matching",
+			"type": "object",
+			"properties": {
+				"date": {
+					"$ref": "#/definitions/ItemDateDTO"
+				},
+				"parameters": {
+					"$ref": "#/definitions/ParametersDTO"
+				},
+				"remark": {
+					"$ref": "#/definitions/ItemRemarkDTO"
+				},
+				"qFlag": {
+					"$ref": "#/definitions/ItemQFlagDTO"
+				},
+				"vFlag": {
+					"$ref": "#/definitions/ItemVFlagDTO"
+				}
+			},
+			"required": [
+				"date",
+				"parameters"
+			],
+			"definitions": {
+				"ItemDateDTO": {
+					"type": "object",
+					"properties": {
+						"columns": {
+							"type": "array",
+							"uniqueItemsByRequiredProperties": true,
+							"minItems": 1,
+							"maxItems": 1,
+							"uniqueItems": true,
+							"items": {
+								"type": "string"
+							}
+						},
+						"format": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"columns",
+						"format"
+					]
+				},
+				"ParametersDTO": {
+					"type": "object",
+					"properties": {
+						"matching": {
+							"type": "array",
+							"uniqueItemsByRequiredProperties": true,
+							"minItems": 1,
+							"uniqueItems": true,
+							"items": {
+								"$ref": "#/definitions/ItemParameterDTO"
+							}
+						}
+					},
+					"required": [
+						"matching"
+					]
+				},
+				"ItemParameterDTO": {
+					"type": "object",
+					"properties": {
+						"columns": {
+							"type": "array",
+							"uniqueItemsByRequiredProperties": true,
+							"minItems": 1,
+							"maxItems": 1,
+							"uniqueItems": true,
+							"items": {
+								"type": "string"
+							}
+						},
+						"dataDefinitionId": {
+							"type": "integer"
+						}
+					},
+					"required": [
+						"columns",
+						"dataDefinitionId"
+					]
+				},
+				"ItemRemarkDTO": {
+					"type": [
+						"object",
+						"null"
+					],
+					"properties": {
+						"columns": {
+							"type": "array",
+							"uniqueItemsByRequiredProperties": true,
+							"maxItems": 1,
+							"uniqueItems": true,
+							"items": {
+								"type": "string"
+							}
+						}
+					},
+					"required": [
+						"columns"
+					]
+				},
+				"ItemQFlagDTO": {
+					"type": [
+						"object",
+						"null"
+					],
+					"properties": {
+						"columns": {
+							"type": "array",
+							"uniqueItemsByRequiredProperties": true,
+							"maxItems": 1,
+							"uniqueItems": true,
+							"items": {
+								"type": "string"
+							}
+						}
+					},
+					"required": [
+						"columns"
+					]
+				},
+				"ItemVFlagDTO": {
+					"type": [
+						"object",
+						"null"
+					],
+					"properties": {
+						"columns": {
+							"type": "array",
+							"uniqueItemsByRequiredProperties": true,
+							"maxItems": 1,
+							"uniqueItems": true,
+							"items": {
+								"type": "string"
+							}
+						}
+					},
+					"required": [
+						"columns"
+					]
+				}
+			}
+		}
+	},
+	"startDate": "2016-11-02T14:17:12.524+00:00",
+	"endDate": null,
+	"updated": "2016-11-02T14:17:12.524+00:00"
+}

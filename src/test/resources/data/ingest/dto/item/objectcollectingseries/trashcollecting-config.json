@@ -1,0 +1,25 @@
+{
+	"date": {
+		"columns": ["Date"],
+		"format": "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"
+	},
+	"parameter": {
+		"columns": null,
+		"dataDefinitionId": 10
+	}, 
+	"classifications": {
+		"matching": [{
+			"columns": ["TrashType"],
+			"classifications": ["root.1", "root.2"]
+		},{
+			"columns": ["TrashOrigin"],
+			"classifications": ["root.3", "root.4"]
+		}]
+	},
+	"qFlag": {
+		"columns": ["Quality"]
+	},
+	"vFlag": {
+		"columns": ["Validation"]
+	}
+}

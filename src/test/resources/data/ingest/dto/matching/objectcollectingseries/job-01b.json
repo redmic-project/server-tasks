@@ -1,0 +1,21 @@
+{
+	"date": {
+		"columns": [
+			"Fecha"
+		],
+		"format": "dd-MM-yyyy"
+	},
+	"parameter": {
+		"dataDefinitionId": 133,
+		"columns": null
+	},
+	"classifications": {
+		"matching": [{
+			"columns": ["TrashType"],
+			"classifications": ["root.1", "root.2"]
+		}, {
+			"columns": ["TrashOrigin"],
+			"classifications": ["root.3", "root.4"]
+		}]
+	}
+}

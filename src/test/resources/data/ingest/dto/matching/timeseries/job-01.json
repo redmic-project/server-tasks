@@ -1,0 +1,16 @@
+{
+	"date": {
+		"columns": [
+			"Fecha-Hora"
+		],
+		"format": "dd/MM/yyyy HH:mm:ss"
+	},
+	"parameters": {
+		"matching": [{
+			"dataDefinitionId": 19,
+			"columns": [
+				"Turbidez"
+			]
+		}]
+	}
+}

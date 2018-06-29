@@ -1,0 +1,5 @@
+{
+	"type": "QualityControl",
+	"field": "qFlag",
+	"columns": ["col1"]
+}

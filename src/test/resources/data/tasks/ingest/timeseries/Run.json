@@ -1,0 +1,7 @@
+{
+	"taskName": "ingest-data-timeseries",
+	"parameters": {
+		"fileName": "timeseries.csv",
+		"separator": ";"
+	}
+}
