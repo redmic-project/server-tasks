@@ -5,6 +5,12 @@ services:
     image: registry.redmic.net/redmic-server/${MICROSERVICE_NAME}:${IMAGE_TAG:-latest}
     environment:
       - SPRING_PROFILES_ACTIVE
+      - SPRING_DATASOURCE_USERNAME
+      - SPRING_DATASOURCE_PASSWORD
+      - JOBS_DATASOURCE_USERNAME
+      - JOBS_DATASOURCE_PASSWORD
+      - AWS_ACCESS_KEY
+      - AWS_SECRET_KEY
       - JAVA_OPTS=-Xmx1g -Xss1g
     networks:
       - elastic-net
