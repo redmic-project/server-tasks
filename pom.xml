@@ -3,64 +3,95 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<parent>
-		<groupId>es.redmic</groupId>
-		<artifactId>redmic</artifactId>
-		<version>0.6.0</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.0.RELEASE</version>
+		<relativePath />
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>es.redmic</groupId>
 	<artifactId>tasks</artifactId>
 	<packaging>jar</packaging>
+	<version>0.6.0</version>
 	<name>Tasks</name>
 	<description>Tasks server</description>
-	<dependencies>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<java.version>1.8</java.version>
+		<tomcat.version>8.5.28</tomcat.version>
 
+		<!-- REDMIC -->
+		<redmic.db.version>0.6.0</redmic.db.version>
+		<redmic.reports.version>0.6.0</redmic.reports.version>
+		<redmic.elasticsearch.version>0.6.0</redmic.elasticsearch.version>
+		<redmic.utils.version>0.6.0</redmic.utils.version>
+		<redmic.exceptions.version>0.6.0</redmic.exceptions.version>
+		<redmic.models.version>0.6.0</redmic.models.version>
+		<redmic.mediastorage.version>0.6.0</redmic.mediastorage.version>
+		<redmic.broker-lib.version>0.6.0</redmic.broker-lib.version>
+		
+		<!-- OTHER -->
+		<powermock.version>1.7.3</powermock.version>
+		
+		<!-- Plugins -->
+		<jacoco.version>0.8.1</jacoco.version>
+		
+		<!-- Environment variables -->
+		<env.MAVEN_REPO_URL>https://artifactory.redmic.net/artifactory</env.MAVEN_REPO_URL>
+	</properties>
+	
+	<dependencies>
 		<dependency>
 			<groupId>es.redmic.lib</groupId>
 			<artifactId>db</artifactId>
-			<version>${redmic.version}</version>
+			<version>${redmic.db.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>es.redmic.lib</groupId>
 			<artifactId>reports</artifactId>
-			<version>${redmic.version}</version>
+			<version>${redmic.reports.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>es.redmic.lib</groupId>
 			<artifactId>elasticsearch</artifactId>
-			<version>${redmic.version}</version>
+			<version>${redmic.elasticsearch.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>es.redmic.lib</groupId>
 			<artifactId>utils</artifactId>
-			<version>${redmic.version}</version>
+			<version>${redmic.utils.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>es.redmic.lib</groupId>
 			<artifactId>exceptions</artifactId>
-			<version>${redmic.version}</version>
+			<version>${redmic.exceptions.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>es.redmic.lib</groupId>
 			<artifactId>models</artifactId>
-			<version>${redmic.version}</version>
+			<version>${redmic.models.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>es.redmic.lib</groupId>
 			<artifactId>mediastorage</artifactId>
-			<version>${redmic.version}</version>
+			<version>${redmic.mediastorage.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>es.redmic.lib</groupId>
 			<artifactId>broker-lib</artifactId>
-			<version>${redmic.version}</version>
+			<version>${redmic.broker-lib.version}</version>
 		</dependency>
 
 		<!-- Spring -->
@@ -91,6 +122,17 @@
 		    <artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
 		
+		<!-- Logs -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+		</dependency>
+		
 		<!-- Test -->
 		
 		<dependency>
@@ -104,16 +146,29 @@
 			<artifactId>spring-kafka-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-easymock</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
+	<distributionManagement>
+		<repository>
+			<id>central</id>
+			<name>redmic-releases</name>
+			<url>${env.MAVEN_REPO_URL}/libs-release-local</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>redmic-snapshots</name>
+			<url>${env.MAVEN_REPO_URL}/libs-snapshot-local</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-install-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -127,6 +182,26 @@
 							<finalName>tasks</finalName>
 							<outputDirectory>dist</outputDirectory>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<executions>
+					<execution>
+						<id>pre-unit-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
