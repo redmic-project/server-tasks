@@ -2,8 +2,10 @@ version: '3.5'
 
 services:
   tasks:
-    image: registry.redmic.net/redmic-server/${MICROSERVICE_NAME}:${IMAGE_TAG:-latest}
+    image: ${IMAGE_NAME}:${IMAGE_TAG:-latest}
     environment:
+      - MICROSERVICE_NAME
+      - MICROSERVICE_PORT
       - SPRING_PROFILES_ACTIVE
       - SPRING_DATASOURCE_USERNAME
       - SPRING_DATASOURCE_PASSWORD
