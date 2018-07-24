@@ -112,7 +112,7 @@ public abstract class ReportService<TWrapper extends Wrapper> extends TaskBaseSe
 			fileName = reportSelection(dto);
 
 		} catch (Exception e) {
-			logger.info("Tarea de report fallida");
+			logger.error("Tarea de report fallida " + e.getMessage());
 			setFailed(new GenerateReportException(dto.getTaskLabel(), dto.getSelectId(), dto.getId()));
 			return null;
 		}
