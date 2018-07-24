@@ -14,7 +14,7 @@ public abstract class ItemStringDTO extends ItemCommonDTO {
 		if (columns == null || columns.size() < 1)
 			return null;
 
-		return fs.readString(columns.get(0)).trim();
+		return fs.readString(columns.get(0).toString()).trim();
 	}
 
 	@Override
@@ -23,6 +23,6 @@ public abstract class ItemStringDTO extends ItemCommonDTO {
 		if (columns == null || columns.size() < 1)
 			return null;
 
-		return ((String) fs.getAttribute(columns.get(0))).trim();
+		return ((String) fs.getAttribute(columns.get(0).toString())).trim();
 	}
 }
