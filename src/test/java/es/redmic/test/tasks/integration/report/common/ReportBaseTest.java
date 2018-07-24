@@ -79,7 +79,7 @@ public abstract class ReportBaseTest extends IntegrationTestBase {
 
 		// Recibe tarea completada
 
-		msg = (MessageWrapper) blockingQueue.poll(1, TimeUnit.MINUTES);
+		msg = (MessageWrapper) blockingQueue.poll(2, TimeUnit.MINUTES);
 		assertNotNull(msg);
 		assertEquals(msg.getUserId(), USER_ID);
 
