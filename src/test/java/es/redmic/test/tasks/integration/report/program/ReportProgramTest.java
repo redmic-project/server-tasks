@@ -40,7 +40,7 @@ public class ReportProgramTest extends ReportBaseTest {
 	protected Map<String, String> createRunTaskRequest() {
 
 		Map<String, String> request = new HashMap<>();
-		request.put("selectId", "1");
+		request.put("selectId", "10");
 		return request;
 	}
 }
