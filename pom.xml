@@ -34,6 +34,7 @@
 		<redmic.models.version>0.6.0</redmic.models.version>
 		<redmic.mediastorage.version>0.6.0</redmic.mediastorage.version>
 		<redmic.broker-lib.version>0.6.0</redmic.broker-lib.version>
+		<redmic.test-utils.version>0.6.0</redmic.test-utils.version>
 		
 		<!-- OTHER -->
 		<powermock.version>1.7.3</powermock.version>
@@ -41,9 +42,6 @@
 		
 		<!-- Plugins -->
 		<jacoco.version>0.8.1</jacoco.version>
-		
-		<!-- Environment variables -->
-		<env.MAVEN_REPO_URL>https://artifactory.redmic.net/artifactory</env.MAVEN_REPO_URL>
 	</properties>
 	
 	<dependencies>
@@ -173,25 +171,19 @@
 		<!-- -->
 		
 		<dependency>
+			<groupId>es.redmic.lib</groupId>
+			<artifactId>test-utils</artifactId>
+			<version>${redmic.test-utils.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-api-easymock</artifactId>
 			<version>${powermock.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<distributionManagement>
-		<repository>
-			<id>central</id>
-			<name>redmic-releases</name>
-			<url>${env.MAVEN_REPO_URL}/libs-release-local</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<name>redmic-snapshots</name>
-			<url>${env.MAVEN_REPO_URL}/libs-snapshot-local</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-	</distributionManagement>
 	<repositories>
 		<repository>
 			<id>confluent</id>
@@ -216,6 +208,13 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<reuseForks>false</reuseForks>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
