@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 
 import javax.activation.MimetypesFileTypeMap;
+import javax.annotation.PostConstruct;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,11 +26,12 @@ import es.redmic.exception.mediastorage.MSFileNotFoundException;
 import es.redmic.mediastorage.service.FileUtils;
 import es.redmic.mediastorage.service.MediaStorageServiceItfc;
 import es.redmic.tasks.TasksApplication;
+import es.redmic.testutils.kafka.KafkaBaseIntegrationTest;
 
 @SpringBootTest(classes = { TasksApplication.class })
 @ActiveProfiles("test")
 @DirtiesContext
-public abstract class IntegrationTestBase {
+public abstract class IntegrationTestBase extends KafkaBaseIntegrationTest {
 
 	protected final static String JOB_PARAMETER_KEY = "parameters";
 
@@ -37,6 +39,12 @@ public abstract class IntegrationTestBase {
 	// configuración se pueda completar
 	@ClassRule
 	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1);
+
+	@PostConstruct
+	public void IntegrationTestBasePostConstruct() throws Exception {
+
+		createSchemaRegistryRestApp(embeddedKafka.getZookeeperConnectionString(), embeddedKafka.getBrokersAsString());
+	}
 
 	@Autowired
 	MediaStorageServiceItfc mediaStorage;

@@ -7,12 +7,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import es.redmic.brokerlib.avro.common.MessageWrapper;
 import es.redmic.test.tasks.integration.report.common.ReportBaseTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource(properties = { "schema.registry.port=18087" })
 public class ReportActivityTest extends ReportBaseTest {
 
 	@Value("${broker.topic.task.report.activity.run}")

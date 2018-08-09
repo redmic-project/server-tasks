@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -34,6 +35,7 @@ import es.redmic.test.tasks.integration.ingest.common.IngestBaseTest;
 import es.redmic.test.tasks.utils.mapper.JsonToBeanTestUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource(properties = { "schema.registry.port=18085" })
 public class IngestDataObjectCollectingSeriesTest extends IngestBaseTest {
 
 	@MockBean

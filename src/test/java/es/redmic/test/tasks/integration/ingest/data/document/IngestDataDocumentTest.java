@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import es.redmic.db.administrative.service.DocumentService;
@@ -35,6 +36,7 @@ import es.redmic.test.tasks.integration.ingest.common.IngestBaseTest;
 import es.redmic.test.tasks.utils.mapper.JsonToBeanTestUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource(properties = { "schema.registry.port=18082" })
 public class IngestDataDocumentTest extends IngestBaseTest {
 
 	@MockBean
