@@ -53,7 +53,7 @@ public abstract class ReportBaseTest extends IntegrationTestBase {
 		sender.send(getRunTopic(), payload);
 
 		// Recibe tarea registrada
-		MessageWrapper msg = (MessageWrapper) blockingQueue.poll(10, TimeUnit.SECONDS);
+		MessageWrapper msg = (MessageWrapper) blockingQueue.poll(50, TimeUnit.SECONDS);
 		assertNotNull(msg);
 		taskId = msg.getActionId();
 		assertEquals(msg.getUserId(), USER_ID);
@@ -67,7 +67,7 @@ public abstract class ReportBaseTest extends IntegrationTestBase {
 		assertEquals(registeredTaskDTO.getStatus().toString(), TaskStatus.Constants.REGISTERED);
 
 		// Recibe tarea arrancada
-		msg = (MessageWrapper) blockingQueue.poll(10, TimeUnit.SECONDS);
+		msg = (MessageWrapper) blockingQueue.poll(50, TimeUnit.SECONDS);
 		assertNotNull(msg);
 		assertEquals(msg.getUserId(), USER_ID);
 
@@ -79,7 +79,7 @@ public abstract class ReportBaseTest extends IntegrationTestBase {
 
 		// Recibe tarea completada
 
-		msg = (MessageWrapper) blockingQueue.poll(1, TimeUnit.MINUTES);
+		msg = (MessageWrapper) blockingQueue.poll(2, TimeUnit.MINUTES);
 		assertNotNull(msg);
 		assertEquals(msg.getUserId(), USER_ID);
 

@@ -7,12 +7,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import es.redmic.brokerlib.avro.common.MessageWrapper;
 import es.redmic.test.tasks.integration.report.common.ReportBaseTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource(properties = { "schema.registry.port=18088" })
 public class ReportDocumentTest extends ReportBaseTest {
 
 	@Value("${broker.topic.task.report.document.run}")
@@ -40,7 +42,7 @@ public class ReportDocumentTest extends ReportBaseTest {
 	protected Map<String, String> createRunTaskRequest() {
 
 		Map<String, String> request = new HashMap<>();
-		request.put("selectId", "6437");
+		request.put("selectId", "1536");
 		return request;
 	}
 }
