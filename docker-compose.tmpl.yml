@@ -4,8 +4,6 @@ services:
   tasks:
     image: ${IMAGE_NAME}:${IMAGE_TAG:-latest}
     environment:
-      - MICROSERVICE_NAME
-      - MICROSERVICE_PORT
       - SPRING_PROFILES_ACTIVE
       - SPRING_DATASOURCE_USERNAME
       - SPRING_DATASOURCE_PASSWORD
