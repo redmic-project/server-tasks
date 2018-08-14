@@ -19,6 +19,8 @@ maven-build:
     AWS_ACCESS_KEY: ${DEV_AWS_ACCESS_KEY}
     AWS_SECRET_KEY: ${DEV_AWS_SECRET_KEY}
     ELASTIC_XPACKSECURITYUSER: ${DEV_ELASTIC_XPACKSECURITYUSER}
+  tags:
+    - oagdev
   only:
     - branches
   cache:
