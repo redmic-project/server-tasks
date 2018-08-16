@@ -53,7 +53,7 @@ public abstract class ReportBaseTest extends IntegrationTestBase {
 		sender.send(getRunTopic(), payload);
 
 		// Recibe tarea registrada
-		MessageWrapper msg = (MessageWrapper) blockingQueue.poll(50, TimeUnit.SECONDS);
+		MessageWrapper msg = (MessageWrapper) blockingQueue.poll(60, TimeUnit.SECONDS);
 		assertNotNull(msg);
 		taskId = msg.getActionId();
 		assertEquals(msg.getUserId(), USER_ID);

@@ -61,7 +61,7 @@ public abstract class IngestBaseTest extends IntegrationTestBase {
 		sender.send(getRunTopic(), payload);
 
 		// Recibe tarea registrada
-		MessageWrapper msg = (MessageWrapper) blockingQueue.poll(10, TimeUnit.SECONDS);
+		MessageWrapper msg = (MessageWrapper) blockingQueue.poll(30, TimeUnit.SECONDS);
 		assertNotNull(msg);
 		taskId = msg.getActionId();
 		assertEquals(msg.getUserId(), USER_ID);
@@ -75,7 +75,7 @@ public abstract class IngestBaseTest extends IntegrationTestBase {
 		assertEquals(registeredTaskDTO.getStatus().toString(), TaskStatus.Constants.REGISTERED);
 
 		// Recibe tarea arrancada
-		msg = (MessageWrapper) blockingQueue.poll(10, TimeUnit.SECONDS);
+		msg = (MessageWrapper) blockingQueue.poll(30, TimeUnit.SECONDS);
 		assertNotNull(msg);
 		assertEquals(msg.getUserId(), USER_ID);
 
@@ -86,7 +86,7 @@ public abstract class IngestBaseTest extends IntegrationTestBase {
 		assertEquals(startedTaskDTO.getStatus().toString(), TaskStatus.Constants.STARTED);
 
 		// Recibe petición de matching
-		msg = (MessageWrapper) blockingQueue.poll(20, TimeUnit.SECONDS);
+		msg = (MessageWrapper) blockingQueue.poll(30, TimeUnit.SECONDS);
 		assertNotNull(msg);
 		assertEquals(msg.getUserId(), USER_ID);
 
