@@ -2,8 +2,10 @@ version: '3.5'
 
 services:
   tasks:
-    networks:
-      - traefik-net
+    ports:
+      - target: ${MICROSERVICE_PORT}
+        published: ${MICROSERVICE_PORT}
+        mode: host
     deploy:
       mode: replicated
       replicas: 1
@@ -12,22 +14,19 @@ services:
         traefik.docker.network: traefik-net
         traefik.frontend.rule: PathPrefix:/api/${MICROSERVICE_NAME}
         traefik.backend: ${MICROSERVICE_NAME}
-      placement:
-        constraints:
-          - node.role == worker
       restart_policy:
-        condition: on-failure
         delay: 1m
         window: 3m
-
-networks:
-  traefik-net:
-    external: true
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          memory: 820M
 
 volumes:
   mediastorage-private-vol:
     name: mediastorage-private-vol
-    driver: "cloudstor:aws"
+
   mediastorage-public-vol:
     name: mediastorage-public-vol
-    driver: "cloudstor:aws"
