@@ -14,7 +14,7 @@ services:
       - AWS_ACCESS_KEY
       - AWS_SECRET_KEY
       - ELASTIC_XPACKSECURITYUSER
-      - JAVA_OPTS=-XX:MaxRAMFraction=1
+      - JAVA_OPTS=-XX:MaxRAMFraction=2
     networks:
       - elastic-net
       - kafka-net
