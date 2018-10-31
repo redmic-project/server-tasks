@@ -14,12 +14,13 @@ services:
       - AWS_ACCESS_KEY
       - AWS_SECRET_KEY
       - ELASTIC_XPACKSECURITYUSER
-      - JAVA_OPTS=-Xmx1g -Xss1g
+      - JAVA_OPTS=-XX:MaxRAMFraction=2
     networks:
       - elastic-net
       - kafka-net
       - postgres-net
       - redmic-net
+      - traefik-net
     volumes:
       - mediastorage-private-vol:/data/MEDIA_STORAGE
       - mediastorage-public-vol:/data/PUBLIC_MEDIA_STORAGE
@@ -28,14 +29,20 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 2m
+      start_period: 4m
 
 networks:
   elastic-net:
     external: true
+
   kafka-net:
     external: true
+
   postgres-net:
     external: true
+
   redmic-net:
+    external: true
+
+  traefik-net:
     external: true
