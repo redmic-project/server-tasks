@@ -2,7 +2,9 @@ package es.redmic.tasks;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cache.annotation.EnableCaching;
@@ -23,6 +25,7 @@ import es.redmic.databaselib.common.repository.BaseRepositoryImpl;
 import es.redmic.db.config.EntityManagerWrapper;
 import es.redmic.tasks.config.OrikaScanBean;
 import es.redmic.tasks.config.ResourceBundleMessageSource;
+import io.micrometer.core.instrument.MeterRegistry;
 
 @SpringBootApplication
 @ComponentScan({ "es.redmic.tasks", "es.redmic.es", "es.redmic.databaselib", "es.redmic.db", "es.redmic.mediastorage",
@@ -32,6 +35,9 @@ import es.redmic.tasks.config.ResourceBundleMessageSource;
 @EntityScan({ "es.redmic.db", "es.redmic.databaselib", "es.redmic.tasks" })
 @EnableCaching(proxyTargetClass = true)
 public class TasksApplication {
+
+	@Value("${info.microservice.name}")
+	String microserviceName;
 
 	public static void main(String[] args) {
 		SpringApplication.run(TasksApplication.class, args);
@@ -75,5 +81,10 @@ public class TasksApplication {
 		protected void configure(HttpSecurity http) throws Exception {
 			http.authorizeRequests().antMatchers("/tasks/actuator/**").permitAll();
 		}
+	}
+
+	@Bean
+	MeterRegistryCustomizer<MeterRegistry> metricsCommonTags() {
+		return registry -> registry.config().commonTags("application", microserviceName);
 	}
 }
