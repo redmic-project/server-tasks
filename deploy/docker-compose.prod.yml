@@ -3,25 +3,9 @@ version: '3.5'
 services:
   tasks:
     deploy:
-      mode: replicated
-      replicas: 1
-      labels:
-        traefik.port: "${MICROSERVICE_PORT}"
-        traefik.docker.network: traefik-net
-        traefik.frontend.rule: PathPrefix:/api/${MICROSERVICE_NAME}
-        traefik.backend: ${MICROSERVICE_NAME}
       placement:
         constraints:
           - node.role == worker
-      restart_policy:
-        delay: 1m
-        window: 3m
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1G
-        reservations:
-          memory: 820M
 
 volumes:
   mediastorage-private-vol:
