@@ -122,6 +122,7 @@ deploy-dev:
     SSH_REMOTE: ${DEV_SSH_REMOTE}
     STACK: api
     SERVICES_TO_CHECK: api_${CI_PROJECT_NAME}
+    STATUS_CHECK_DELAY: 300
     IMAGE_NAME: ${CI_REGISTRY_IMAGE}
     IMAGE_TAG: ${CI_COMMIT_SHA}
     COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.dev.yml
@@ -156,6 +157,7 @@ deploy-supporting-branch:
     SSH_REMOTE: ${DEV_SSH_REMOTE}
     STACK: api
     SERVICES_TO_CHECK: api_${CI_PROJECT_NAME}
+    STATUS_CHECK_DELAY: 300
     IMAGE_NAME: ${CI_REGISTRY_IMAGE}
     IMAGE_TAG: ${CI_COMMIT_SHA}
     COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.dev.yml
@@ -194,6 +196,7 @@ deploy-pro:
     SSH_REMOTE: ${PRO_SSH_REMOTE}
     STACK: api
     SERVICES_TO_CHECK: api_${CI_PROJECT_NAME}
+    STATUS_CHECK_DELAY: 300
     IMAGE_NAME: ${CI_REGISTRY_IMAGE}
     IMAGE_TAG: ${CI_COMMIT_SHA}
     COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.prod.yml
