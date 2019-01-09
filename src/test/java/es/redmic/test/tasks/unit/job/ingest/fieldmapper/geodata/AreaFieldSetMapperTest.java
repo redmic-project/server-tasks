@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.powermock.reflect.Whitebox;
 
 import com.vividsolutions.jts.geom.Coordinate;
@@ -25,8 +25,6 @@ public class AreaFieldSetMapperTest {
 	AreaFieldSetMapper areaFieldSetMapper;
 
 	GeometryFactory geomFactory = new GeometryFactory(new PrecisionModel(), 4326);
-
-	private MultiPolygon invokeMethod;
 
 	@Before
 	public void setupTest() throws IOException {

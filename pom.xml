@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.3.RELEASE</version>
+		<version>2.1.0.RELEASE</version>
 		<relativePath />
 	</parent>
 
@@ -38,7 +38,8 @@
 		
 		<!-- OTHER -->
 		<powermock.version>1.7.3</powermock.version>
-		<kafka.version>1.1.0</kafka.version>
+		<kafka.version>2.0.0</kafka.version>
+		<elasticsearch.version>5.6.1</elasticsearch.version>
 		
 		<!-- Plugins -->
 		<jacoco.version>0.8.1</jacoco.version>
@@ -196,18 +197,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-						<configuration>
-							<executable>true</executable>
-							<finalName>tasks</finalName>
-							<outputDirectory>dist</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
+				<configuration>
+					<executable>true</executable>
+					<finalName>tasks</finalName>
+					<outputDirectory>dist</outputDirectory>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

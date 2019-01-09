@@ -8,7 +8,6 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor;
-import org.springframework.batch.core.configuration.support.MapJobRegistry;
 import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.batch.core.explore.support.JobExplorerFactoryBean;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -17,6 +16,7 @@ import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.launch.support.SimpleJobOperator;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -31,19 +31,15 @@ import org.springframework.validation.annotation.Validated;
 @EnableBatchProcessing
 public class JobConfig implements BatchConfigurer {
 
+	@Autowired
+	JobRegistry jobRegistry;
+
 	@Bean
 	@Validated
 	@ConfigurationProperties(prefix = "jobs.datasource")
 	public DataSource dataSourceJob() {
 
 		return DataSourceBuilder.create().build();
-	}
-
-	@Bean
-	public JobRegistry jobRegistry() {
-		JobRegistry jobRegistry = new MapJobRegistry();
-
-		return jobRegistry;
 	}
 
 	@Bean
@@ -72,7 +68,7 @@ public class JobConfig implements BatchConfigurer {
 		SimpleJobOperator jobOperator = new SimpleJobOperator();
 		jobOperator.setJobExplorer(getJobExplorer());
 		jobOperator.setJobLauncher(getJobLauncher());
-		jobOperator.setJobRegistry(jobRegistry());
+		jobOperator.setJobRegistry(jobRegistry);
 		jobOperator.setJobRepository(getJobRepository());
 		jobOperator.afterPropertiesSet();
 
@@ -82,7 +78,7 @@ public class JobConfig implements BatchConfigurer {
 	@Bean
 	public JobRegistryBeanPostProcessor jobRegistryBeanPostProcessor() throws Exception {
 		JobRegistryBeanPostProcessor jobRegistryBeanPostProcessor = new JobRegistryBeanPostProcessor();
-		jobRegistryBeanPostProcessor.setJobRegistry(jobRegistry());
+		jobRegistryBeanPostProcessor.setJobRegistry(jobRegistry);
 		jobRegistryBeanPostProcessor.afterPropertiesSet();
 
 		return jobRegistryBeanPostProcessor;
