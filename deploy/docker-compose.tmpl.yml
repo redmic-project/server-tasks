@@ -40,12 +40,6 @@ services:
       restart_policy:
         delay: 1m
         window: 3m
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1G
-        reservations:
-          memory: 820M
 
 networks:
   elastic-net:

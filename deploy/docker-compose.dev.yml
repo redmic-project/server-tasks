@@ -1,5 +1,15 @@
 version: '3.5'
 
+services:
+  tasks:
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          memory: 820M
+
 volumes:
   mediastorage-private-vol:
     name: mediastorage-private-vol

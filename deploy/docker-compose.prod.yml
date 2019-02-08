@@ -6,6 +6,12 @@ services:
       placement:
         constraints:
           - node.role == worker
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+        reservations:
+          memory: 1639M
 
 volumes:
   mediastorage-private-vol:
