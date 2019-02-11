@@ -6,7 +6,6 @@ import org.joda.time.DateTime;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
 
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiLineString;
@@ -31,7 +30,6 @@ import ma.glasnost.orika.impl.ConfigurableMapper;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import ma.glasnost.orika.metadata.TypeFactory;
 
-@Component
 public class OrikaScanBean extends ConfigurableMapper
 		implements ApplicationContextAware, OrikaScanBeanESItfc, OrikaScanBeanDBItfc {
 
@@ -81,6 +79,7 @@ public class OrikaScanBean extends ConfigurableMapper
 	 * @param applicationContext
 	 *            The application context to look for managed beans in.
 	 */
+	@Override
 	public void addAllSpringBeans() {
 		@SuppressWarnings("rawtypes")
 		final Map<String, Converter> converters = applicationContext.getBeansOfType(Converter.class);
@@ -105,6 +104,7 @@ public class OrikaScanBean extends ConfigurableMapper
 	 * @param converter
 	 *            The converter.
 	 */
+	@Override
 	public void addConverter(final Converter<?, ?> converter) {
 		factory.getConverterFactory().registerConverter(converter);
 	}
@@ -115,6 +115,7 @@ public class OrikaScanBean extends ConfigurableMapper
 	 * @param mapper
 	 *            The mapper.
 	 */
+	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addMapper(final CustomMapper<?, ?> mapper) {
 

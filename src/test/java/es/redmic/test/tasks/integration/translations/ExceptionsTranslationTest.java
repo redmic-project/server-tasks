@@ -15,9 +15,10 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
-import org.springframework.kafka.test.rule.KafkaEmbedded;
+import org.springframework.kafka.test.rule.EmbeddedKafkaRule;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import es.redmic.es.administrative.repository.ActivityESRepository;
@@ -27,6 +28,7 @@ import es.redmic.tasks.TasksApplication;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = { TasksApplication.class })
+@TestPropertySource(properties = { "schema.registry.port=0" })
 @ActiveProfiles("test")
 @DirtiesContext
 public class ExceptionsTranslationTest {
@@ -34,7 +36,7 @@ public class ExceptionsTranslationTest {
 	// En este contexto es necesario definir embeddedKafka para que la
 	// configuración se pueda completar
 	@ClassRule
-	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1);
+	public static EmbeddedKafkaRule embeddedKafka = new EmbeddedKafkaRule(1);
 
 	@Autowired
 	MessageSource messageSource;

@@ -25,11 +25,21 @@ services:
       - mediastorage-private-vol:/data/MEDIA_STORAGE
       - mediastorage-public-vol:/data/PUBLIC_MEDIA_STORAGE
     healthcheck:
-      test: wget --spider -S -t 3 http://localhost:${MICROSERVICE_PORT}/api/${MICROSERVICE_NAME}/actuator/health
+      test: wget --spider -q http://localhost:${MICROSERVICE_PORT}/api/${MICROSERVICE_NAME}/actuator/health
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 4m
+      start_period: 5m
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        traefik.frontend.rule: Host:${PUBLIC_HOSTNAME};PathPrefix:/api/${MICROSERVICE_NAME}
+        traefik.backend: ${MICROSERVICE_NAME}
+        traefik.port: "${MICROSERVICE_PORT}"
+      restart_policy:
+        delay: 1m
+        window: 3m
 
 networks:
   elastic-net:

@@ -14,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.ClassRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.kafka.test.rule.KafkaEmbedded;
+import org.springframework.kafka.test.rule.EmbeddedKafkaRule;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
@@ -38,12 +38,13 @@ public abstract class IntegrationTestBase extends KafkaBaseIntegrationTest {
 	// En este contexto es necesario definir embeddedKafka para que la
 	// configuración se pueda completar
 	@ClassRule
-	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1);
+	public static EmbeddedKafkaRule embeddedKafka = new EmbeddedKafkaRule(1);
 
 	@PostConstruct
 	public void IntegrationTestBasePostConstruct() throws Exception {
 
-		createSchemaRegistryRestApp(embeddedKafka.getZookeeperConnectionString(), embeddedKafka.getBrokersAsString());
+		createSchemaRegistryRestApp(embeddedKafka.getEmbeddedKafka().getZookeeperConnectionString(),
+				embeddedKafka.getEmbeddedKafka().getBrokersAsString());
 	}
 
 	@Autowired
