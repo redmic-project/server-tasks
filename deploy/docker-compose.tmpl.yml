@@ -3,56 +3,76 @@ version: '3.5'
 services:
   tasks:
     image: ${IMAGE_NAME}:${IMAGE_TAG:-latest}
+    build:
+      context: ..
+      dockerfile: ${DOCKERFILE:-Dockerfile}
+      args:
+        PARENT_IMAGE_NAME:
+        PARENT_IMAGE_TAG:
+        MICROSERVICE_NAME:
+        MICROSERVICE_PORT:
     environment:
-      - MICROSERVICE_NAME
-      - MICROSERVICE_PORT
-      - SPRING_PROFILES_ACTIVE
-      - SPRING_DATASOURCE_USERNAME
-      - SPRING_DATASOURCE_PASSWORD
-      - JOBS_DATASOURCE_USERNAME
-      - JOBS_DATASOURCE_PASSWORD
-      - AWS_ACCESS_KEY
-      - AWS_SECRET_KEY
-      - ELASTIC_XPACKSECURITYUSER
-      - JAVA_OPTS=-XX:MaxRAMFraction=2
+      MICROSERVICE_NAME:
+      MICROSERVICE_PORT:
+      SPRING_DATASOURCE_USERNAME:
+      SPRING_DATASOURCE_PASSWORD:
+      SPRING_DATASOURCE_URL:
+      JOBS_DATASOURCE_USERNAME:
+      JOBS_DATASOURCE_PASSWORD:
+      JOBS_DATASOURCE_URL:
+      AWS_ACCESS_KEY:
+      AWS_SECRET_KEY:
+      ELASTIC_XPACKSECURITYUSER:
+      JAVA_OPTS: -XX:MaxRAMFraction=2
     networks:
-      - elastic-net
-      - kafka-net
-      - postgres-net
-      - redmic-net
-      - traefik-net
+      elastic-net:
+      kafka-net:
+      postgres-net:
+      redmic-net:
+      traefik-net:
     volumes:
       - mediastorage-private-vol:/data/MEDIA_STORAGE
       - mediastorage-public-vol:/data/PUBLIC_MEDIA_STORAGE
     healthcheck:
       test: wget --spider -q http://localhost:${MICROSERVICE_PORT}/api/${MICROSERVICE_NAME}/actuator/health
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 5m
+      interval: ${HEALTHCHECK_INTERVAL:-30s}
+      timeout: ${HEALTHCHECK_TIMEOUT:-10s}
+      retries: ${HEALTHCHECK_RETRIES:-3}
+      start_period: ${HEALTHCHECK_START_PERIOD:-5m}
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: ${REPLICAS:-1}
       labels:
         traefik.frontend.rule: Host:${PUBLIC_HOSTNAME};PathPrefix:/api/${MICROSERVICE_NAME}
         traefik.backend: ${MICROSERVICE_NAME}
         traefik.port: "${MICROSERVICE_PORT}"
       restart_policy:
-        delay: 1m
-        window: 3m
+        delay: ${RESTART_DELAY:-1m}
+      update_config:
+        delay: ${UPDATE_DELAY:-2m}
 
 networks:
   elastic-net:
+    name: ${ELASTIC_NET_NAME:-elastic-net}
+    driver: ${ELASTIC_NET_DRIVER:-overlay}
     external: true
 
   kafka-net:
+    name: ${KAFKA_NET_NAME:-elastic-net}
+    driver: ${KAFKA_NET_DRIVER:-overlay}
     external: true
 
   postgres-net:
+    name: ${POSTGRES_NET_NAME:-postgres-net}
+    driver: ${POSTGRES_NET_DRIVER:-overlay}
     external: true
 
   redmic-net:
+    name: ${REDMIC_NET_NAME:-redmic-net}
+    driver: ${REDMIC_NET_DRIVER:-overlay}
     external: true
 
   traefik-net:
+    name: ${TRAEFIK_NET_NAME:-traefik-net}
+    driver: ${TRAEFIK_NET_DRIVER:-overlay}
     external: true

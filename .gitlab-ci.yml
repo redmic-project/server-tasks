@@ -11,37 +11,42 @@ include:
   - project: 'redmic-project/gitlab-ci-templates'
     ref: master
     file: '/deployment.yml'
+  - project: 'redmic-project/gitlab-ci-templates'
+    ref: master
+    file: '/deployment-custom-image.yml'
 
 stages:
   - build
   - license-list
+  - pre-package
   - package
-  - test-package
+  - post-package
   - deploy
 
 variables:
-  LOGGING_LEVEL_ROOT: error
-  LOGGING_LEVEL_ORG_SPRINGFRAMEWORK: error
-  DOCKER_BUILD_ARGS: --build-arg PARENT_IMAGE_NAME=${REDMIC_SERVER_IMAGE_NAME} --build-arg PARENT_IMAGE_TAG=${REDMIC_SERVER_IMAGE_TAG}
-  STACK: api
-  STATUS_CHECK_DELAY: 300
+  PROJECT_PARENT_NAME: api
+
+.maven-build:
+  services:
+    - name: postgres:${POSTGRES_IMAGE_TAG}
+      alias: db
+  variables:
+    POSTGRES_IMAGE_TAG: 10.13-alpine
+    POSTGRES_DB: redmic
+    POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
+    POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+    LOGGING_LEVEL_ROOT: error
+    LOGGING_LEVEL_ORG_SPRINGFRAMEWORK: error
+
+.docker-build:
+  variables:
+    DBLD_PARENT_IMAGE_NAME: ${REDMIC_SERVER_IMAGE_NAME}
+    DBLD_PARENT_IMAGE_TAG: ${REDMIC_SERVER_IMAGE_TAG}
 
 .deploy:
-  script:
-    - >
-      deploy.sh IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
-      SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE} SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
-      SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD} JOBS_DATASOURCE_USERNAME=${JOBS_DATASOURCE_USERNAME}
-      JOBS_DATASOURCE_PASSWORD=${JOBS_DATASOURCE_PASSWORD} AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
-      AWS_SECRET_KEY=${AWS_SECRET_KEY} ELASTIC_XPACKSECURITYUSER=${ELASTIC_XPACKSECURITYUSER}
-      PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME}
+  variables:
+    STACK: ${PROJECT_PARENT_NAME}
+    SERVICES_TO_CHECK: ${PROJECT_PARENT_NAME}_${CI_PROJECT_NAME}
+    STATUS_CHECK_DELAY: 300
   environment:
     url: https://${PUBLIC_HOSTNAME}/api/${CI_PROJECT_NAME}
-
-.deploy-development:
-  variables:
-    SPRING_PROFILES_ACTIVE: pre
-
-.deploy-production:
-  variables:
-    SPRING_PROFILES_ACTIVE: prod
