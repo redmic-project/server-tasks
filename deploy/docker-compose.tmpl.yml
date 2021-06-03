@@ -22,7 +22,9 @@ services:
       JOBS_DATASOURCE_URL:
       AWS_ACCESS_KEY:
       AWS_SECRET_KEY:
-      ELASTIC_XPACKSECURITYUSER:
+      ELASTIC_CLUSTERNAME:
+      ELASTIC_USER:
+      ELASTIC_PASSWORD:
       JAVA_OPTS: -XX:MaxRAMFraction=2
     networks:
       elastic-net:
@@ -53,12 +55,12 @@ services:
 
 networks:
   elastic-net:
-    name: ${ELASTIC_NET_NAME:-elastic-net}
+    name: ${ELASTIC_NET_NAME:-elastic6-net}
     driver: ${ELASTIC_NET_DRIVER:-overlay}
     external: true
 
   kafka-net:
-    name: ${KAFKA_NET_NAME:-elastic-net}
+    name: ${KAFKA_NET_NAME:-kafka-net}
     driver: ${KAFKA_NET_DRIVER:-overlay}
     external: true
 
