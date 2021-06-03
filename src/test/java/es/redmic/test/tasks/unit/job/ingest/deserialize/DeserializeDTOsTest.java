@@ -9,9 +9,9 @@ package es.redmic.test.tasks.unit.job.ingest.deserialize;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -47,7 +47,6 @@ import com.kjetland.jackson.jsonSchema.JsonSchemaResources;
 
 import es.redmic.tasks.ingest.model.intervention.matching.RequestUserInterventionMatchingTaskDTO;
 import es.redmic.tasks.ingest.model.matching.series.timeseries.dto.TimeSeriesMatching;
-import es.redmic.tasks.ingest.model.series.dto.RunTaskIngestDataSeriesDTO;
 
 public class DeserializeDTOsTest {
 
@@ -62,22 +61,6 @@ public class DeserializeDTOsTest {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 
 		validator = factory.getValidator();
-	}
-
-	@Test
-	public void DeserializeRunDTOToReturnOK() throws IOException {
-
-		InputStream resource = getClass().getResource(path + "Run.json").openStream();
-
-		RunTaskIngestDataSeriesDTO dto = jacksonMapper.readerFor(RunTaskIngestDataSeriesDTO.class).readValue(resource);
-
-		Set<ConstraintViolation<RunTaskIngestDataSeriesDTO>> error = validator.validate(dto);
-
-		assertEquals(error.size(), 0);
-		assertEquals(dto.getParameters().getFileName(), "timeseries.csv");
-		assertEquals(dto.getTaskName(), "ingest-data-timeseries");
-
-		assertThat(dto, instanceOf(RunTaskIngestDataSeriesDTO.class));
 	}
 
 	@Test

@@ -9,9 +9,9 @@ package es.redmic.test.tasks.integration.ingest.data.document;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,6 +33,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -57,6 +58,7 @@ import es.redmic.test.tasks.utils.mapper.JsonToBeanTestUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource(properties = { "schema.registry.port=18082" })
+@ActiveProfiles("test")
 public class IngestDataDocumentTest extends IngestBaseTest {
 
 	@MockBean
@@ -69,12 +71,12 @@ public class IngestDataDocumentTest extends IngestBaseTest {
 	IngestDataDocumentRepository repository;
 
 	// @formatter:off
-	
+
 	final String CSV_RESOURCES = "/data/csv/document/",
 			FILENAME_CSV = "job-01.csv",
 			TASK_NAME = "ingest-data-document",
 			DELIMITER = "|";
-	// @formatter:on		
+	// @formatter:on
 
 	String FILENAME_RESULT;
 
