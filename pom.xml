@@ -25,13 +25,14 @@
 		<redmic.exceptions.version>0.10.0</redmic.exceptions.version>
 		<redmic.models.version>0.12.0-feature-refactoring</redmic.models.version>
 		<redmic.mediastorage.version>0.7.0</redmic.mediastorage.version>
-		<redmic.broker-lib.version>0.8.0</redmic.broker-lib.version>
+		<redmic.broker-lib.version>0.10.0</redmic.broker-lib.version>
 		<redmic.test-utils.version>0.10.0-feature-refactoring</redmic.test-utils.version>
 
 		<!-- OTHER -->
-		<powermock.version>1.7.3</powermock.version>
-		<kafka.version>2.0.0</kafka.version>
-		<elasticsearch.version>5.6.1</elasticsearch.version>
+		<jackson-datatype-jts.version>1.0-2.7</jackson-datatype-jts.version>
+		<powermock.version>2.0.9</powermock.version>
+		<orika-core.version>1.5.4</orika-core.version>
+		<kafka.version>2.0.1</kafka.version>
 	</properties>
 
 	<dependencies>
@@ -39,6 +40,12 @@
 			<groupId>es.redmic.lib</groupId>
 			<artifactId>db</artifactId>
 			<version>${redmic.db.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>ma.glasnost.orika</groupId>
+					<artifactId>orika-core</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -111,6 +118,20 @@
 		    <artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
 
+		<!-- Otros -->
+
+		<dependency>
+			<groupId>ma.glasnost.orika</groupId>
+			<artifactId>orika-core</artifactId>
+			<version>${orika-core.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.graphhopper.external</groupId>
+			<artifactId>jackson-datatype-jts</artifactId>
+			<version>${jackson-datatype-jts.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- Test -->
 
 		<dependency>
