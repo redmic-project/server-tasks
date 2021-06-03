@@ -27,16 +27,93 @@ variables:
   PROJECT_PARENT_NAME: api
 
 .maven-build:
-  services:
-    - name: postgres:${POSTGRES_IMAGE_TAG}
-      alias: db
   variables:
     POSTGRES_IMAGE_TAG: 10.13-alpine
     POSTGRES_DB: redmic
-    POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
-    POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: password
+    DOCKER_HOST: tcp://docker:2375
+    SPRING_DATASOURCE_URL: jdbc:postgresql://docker:5432/redmic?stringtype=unspecified
+    ELASTIC_ADDRESSES: docker
+    ELASTICSEARCH_IMAGE_NAME: docker.elastic.co/elasticsearch/elasticsearch
+    ELASTICSEARCH_IMAGE_TAG: 6.6.2
+    ES_BOOTSTRAP_MEMORY_LOCK: 'true'
+    OLD_ELASTIC_ADMIN_PASS: changeme
+    ELASTIC_ADMIN_PASS: elastic_admin_pass
+    ELASTIC_USER: elastic_user
+    ELASTIC_USER_PASS: elastic_user_pass
+    ELASTIC_USER_ROLE: redmic_user
+    ES_JAVA_OPTS: '-Xms512m -Xmx512m -Djava.security.policy=file:///usr/share/elasticsearch/config/grovy-classes_whitelist.policy'
+    ES_CLUSTER_NAME: es_dev
+    ES_NODE_NAME: node-1
+    ES_DISCOVERY_ZEN_MINIMUM_MASTER_NODES: 1
+    ES_DISCOVERY_ZEN_PING_UNICAST_HOSTS: es6-1
+    ES_XPACK_SECURITY_ENABLED: 'false'
+    ELASTIC_HOSTS: es6-1
     LOGGING_LEVEL_ROOT: error
     LOGGING_LEVEL_ORG_SPRINGFRAMEWORK: error
+    GITLAB_REGISTRY_HOST: registry.gitlab.com
+    CI_DEPLOY_USER: ci_deploy_user
+    CI_DEPLOY_PASSWORD: ci_deploy_password
+  services:
+    - ${DIND_IMAGE_NAME}:${DIND_IMAGE_TAG}
+  before_script:
+    - >
+      mkdir -p sql;
+      chmod -R 755 sql;
+      docker network create test
+    - >
+      docker run -d --rm --name postgres \
+        -p 5432:5432 \
+        --network test \
+        --network-alias db \
+        -e POSTGRES_DB \
+        -e POSTGRES_USER \
+        -e POSTGRES_PASSWORD \
+        -v $(pwd)/sql:/sql \
+        postgres:${POSTGRES_IMAGE_TAG}
+    - >
+      RETRIES=10;
+      until docker exec postgres psql -h localhost \
+          -d redmic \
+          -U ${POSTGRES_USER} \
+          -c 'select 1' > /dev/null 2>&1 || [ $RETRIES -eq 0 ];
+      do
+          RETRIES=$((RETRIES-=1));
+          echo "Waiting for postgres server, ${RETRIES} remaining attempts...";
+          sleep 1;
+      done;
+    - >
+      docker run -d --rm --name es6-1 \
+        -p 9300:9300 \
+        -p 9200:9200 \
+        --network test \
+        --ulimit memlock=-1:-1 \
+        -e ES_BOOTSTRAP_MEMORY_LOCK \
+        -e OLD_ELASTIC_ADMIN_PASS \
+        -e ELASTIC_ADMIN_PASS \
+        -e ELASTIC_USER \
+        -e ELASTIC_USER_PASS \
+        -e ELASTIC_USER_ROLE \
+        -e ES_JAVA_OPTS \
+        -e ES_CLUSTER_NAME \
+        -e ES_NODE_NAME \
+        -e ES_DISCOVERY_ZEN_MINIMUM_MASTER_NODES \
+        -e ES_DISCOVERY_ZEN_PING_UNICAST_HOSTS \
+        -e ES_XPACK_SECURITY_ENABLED \
+        ${ELASTICSEARCH_IMAGE_NAME}:${ELASTICSEARCH_IMAGE_TAG}
+    - >
+      RESPONSE="";
+      until [ "$RESPONSE" = "green" ];
+      do
+        sleep 15;
+        RESPONSE="$(curl -sS -u ${ELASTIC_USER}:${ELASTIC_USER_PASS} docker:9200/_cat/health?h=status || :)";
+        echo "Waiting for elasticsearch server, remaining attempts... Last output:";
+        echo $RESPONSE;
+      done
+  after_script:
+    - rm -rf .m2/repository/es
+    - docker stop postgres es6-1
 
 .docker-build:
   variables:
@@ -46,7 +123,6 @@ variables:
 .deploy:
   variables:
     STACK: ${PROJECT_PARENT_NAME}
-    SERVICES_TO_CHECK: ${PROJECT_PARENT_NAME}_${CI_PROJECT_NAME}
     STATUS_CHECK_DELAY: 300
   environment:
     url: https://${PUBLIC_HOSTNAME}/api/${CI_PROJECT_NAME}
