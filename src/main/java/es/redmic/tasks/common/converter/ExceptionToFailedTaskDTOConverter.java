@@ -22,9 +22,12 @@ package es.redmic.tasks.common.converter;
 
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
+
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -47,14 +50,13 @@ public class ExceptionToFailedTaskDTOConverter extends CustomConverter<IngestBas
 	Locale locale = LocaleContextHolder.getLocale();
 
 	@Autowired
-	protected UserTasksRepository repository;
-
-	@Autowired
 	private MessageSource messageSource;
 
 	@Override
 	public FailedTaskDTO convert(IngestBaseException source, Type<? extends FailedTaskDTO> destinationType,
 		MappingContext mappingContext) {
+
+		UserTasksRepository repository = (UserTasksRepository) mappingContext.getProperty("repository");
 
 		UserTasks task = (UserTasks) repository.findById(source.getTaskId()).get_source();
 		task.setStatus(TaskStatus.FAILED);

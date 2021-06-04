@@ -51,6 +51,7 @@ import es.redmic.tasks.ingest.model.step.model.CompletedStep;
 import es.redmic.tasks.ingest.model.step.model.RegisteredStep;
 import es.redmic.tasks.ingest.model.step.model.RunningStep;
 import es.redmic.tasks.ingest.model.step.model.StartedStep;
+import ma.glasnost.orika.MappingContext;
 
 public abstract class TaskBaseRepository {
 
@@ -162,7 +163,10 @@ public abstract class TaskBaseRepository {
 
 	public FailedTaskDTO setFailed(IngestBaseException ex) {
 
-		FailedTaskDTO failedTask = orikaMapper.getMapperFacade().convert(ex, FailedTaskDTO.class, null, null);
+		MappingContext mappingContext = orikaMapper.getMappingContext();
+		mappingContext.setProperty("repository", repository);
+
+		FailedTaskDTO failedTask = orikaMapper.getMapperFacade().convert(ex, FailedTaskDTO.class, null, mappingContext);
 
 		LOGGER.debug("Registrando error en la tarea " + failedTask.getTaskName() + " para el usuario "
 				+ failedTask.getUserId());
