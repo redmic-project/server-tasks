@@ -91,8 +91,8 @@ variables:
         -o sql/api_database_structure_test.sql \
         "https://gitlab.com/api/v4/snippets/${API_DATABASE_STRUCTURE_TEST_SNIPPET_ID}/raw"
       curl -s --header "PRIVATE-TOKEN: ${GITLAB_TOKEN_READ_API}" \
-	      -o sql/task_database_structure_test.sql \
-	      "https://gitlab.com/api/v4/snippets/${TASK_DATABASE_STRUCTURE_TEST_SNIPPET_ID}/raw"
+        -o sql/task_database_structure_test.sql \
+        "https://gitlab.com/api/v4/snippets/${TASK_DATABASE_STRUCTURE_TEST_SNIPPET_ID}/raw"
     - >
       RETRIES=10;
       until docker exec postgres psql -h localhost \
