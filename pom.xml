@@ -19,7 +19,7 @@
 	<properties>
 		<!-- REDMIC -->
 		<redmic.db.version>0.7.0-feature-refactoring</redmic.db.version>
-		<redmic.reports.version>0.7.0</redmic.reports.version>
+		<redmic.reports.version>0.7.0-feature-refactoring</redmic.reports.version>
 		<redmic.elasticsearch.version>0.8.0-feature-refactoring</redmic.elasticsearch.version>
 		<redmic.utils.version>0.10.0-feature-changeJtsVersion</redmic.utils.version>
 		<redmic.exceptions.version>0.10.0</redmic.exceptions.version>
@@ -64,6 +64,12 @@
 			<groupId>es.redmic.lib</groupId>
 			<artifactId>utils</artifactId>
 			<version>${redmic.utils.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-codec</groupId>
+					<artifactId>commons-codec</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -132,6 +138,7 @@
 			<version>${jackson-datatype-jts.version}</version>
 			<scope>provided</scope>
 		</dependency>
+
 		<!-- Test -->
 
 		<dependency>
