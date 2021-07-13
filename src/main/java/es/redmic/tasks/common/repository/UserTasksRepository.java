@@ -36,11 +36,17 @@ import es.redmic.tasks.ingest.model.status.model.UserTasks;
 @Repository
 public class UserTasksRepository extends RWDataESRepository<UserTasks> {
 
-	private static String[] INDEX = { "user" };
-	private static String TYPE = "tasks";
+	private static String[] INDEX = { "tasks" };
+	private static String TYPE = "_doc";
 
 	public UserTasksRepository() {
 		super(INDEX, TYPE);
+	}
+
+	@Override
+	public UserTasks update(UserTasks modelToIndex) {
+
+		return elasticPersistenceUtils.update(getIndex()[0], getType(), modelToIndex, modelToIndex.getId().toString());
 	}
 
 	@SuppressWarnings("unchecked")
