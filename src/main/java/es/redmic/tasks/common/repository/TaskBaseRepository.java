@@ -163,8 +163,10 @@ public abstract class TaskBaseRepository {
 
 	public FailedTaskDTO setFailed(IngestBaseException ex) {
 
+		UserTasks taskFailed = (UserTasks) repository.findById(ex.getTaskId()).get_source();
+
 		MappingContext mappingContext = orikaMapper.getMappingContext();
-		mappingContext.setProperty("repository", repository);
+		mappingContext.setProperty("task", taskFailed);
 
 		FailedTaskDTO failedTask = orikaMapper.getMapperFacade().convert(ex, FailedTaskDTO.class, null, mappingContext);
 
