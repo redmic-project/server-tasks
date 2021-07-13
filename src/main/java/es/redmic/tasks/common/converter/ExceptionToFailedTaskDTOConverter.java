@@ -22,18 +22,14 @@ package es.redmic.tasks.common.converter;
 
 import java.util.Locale;
 
-import javax.annotation.PostConstruct;
-
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.redmic.exception.common.ExceptionTypeItfc;
 import es.redmic.exception.tasks.ingest.IngestBaseException;
-import es.redmic.tasks.common.repository.UserTasksRepository;
 import es.redmic.tasks.ingest.model.status.common.TaskError;
 import es.redmic.tasks.ingest.model.status.common.TaskStatus;
 import es.redmic.tasks.ingest.model.status.dto.FailedTaskDTO;
@@ -56,9 +52,7 @@ public class ExceptionToFailedTaskDTOConverter extends CustomConverter<IngestBas
 	public FailedTaskDTO convert(IngestBaseException source, Type<? extends FailedTaskDTO> destinationType,
 		MappingContext mappingContext) {
 
-		UserTasksRepository repository = (UserTasksRepository) mappingContext.getProperty("repository");
-
-		UserTasks task = (UserTasks) repository.findById(source.getTaskId()).get_source();
+		UserTasks task = (UserTasks) mappingContext.getProperty("task");
 		task.setStatus(TaskStatus.FAILED);
 
 		FailedStep step = new FailedStep();
