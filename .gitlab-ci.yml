@@ -36,7 +36,7 @@ variables:
     DIND_IMAGE_TAG: dind
     DOCKER_HOST: tcp://docker:2375
     SPRING_DATASOURCE_URL: jdbc:postgresql://docker:5432/redmic?stringtype=unspecified&currentSchema=sde
-    JOB_DATASOURCE_URL: jdbc:postgresql://docker:5432/redmic?currentSchema=job
+    JOBS_DATASOURCE_URL: jdbc:postgresql://docker:5432/redmic?currentSchema=job
     ELASTIC_ADDRESSES: docker
     ELASTICSEARCH_IMAGE_NAME: docker.elastic.co/elasticsearch/elasticsearch
     ELASTICSEARCH_IMAGE_TAG: 6.6.2
