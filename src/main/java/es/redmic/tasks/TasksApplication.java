@@ -9,9 +9,9 @@ package es.redmic.tasks;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,7 +26,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -43,11 +45,10 @@ import com.fasterxml.jackson.databind.Module;
 
 import es.redmic.databaselib.common.repository.BaseRepositoryImpl;
 import es.redmic.db.config.EntityManagerWrapper;
-import es.redmic.tasks.config.OrikaScanBean;
 import es.redmic.tasks.config.ResourceBundleMessageSource;
 import io.micrometer.core.instrument.MeterRegistry;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = { MongoAutoConfiguration.class, ElasticsearchAutoConfiguration.class })
 @ComponentScan({ "es.redmic.tasks", "es.redmic.es", "es.redmic.databaselib", "es.redmic.db", "es.redmic.mediastorage",
 		"es.redmic.brokerlib" })
 @EnableJpaRepositories(basePackages = { "es.redmic.tasks", "es.redmic.databaselib",
@@ -75,12 +76,6 @@ public class TasksApplication {
 	public MessageSource messageSource() {
 
 		return new ResourceBundleMessageSource();
-	}
-
-	@PostConstruct
-	@Bean
-	public OrikaScanBean orikaScanBean() {
-		return new OrikaScanBean();
 	}
 
 	@Bean

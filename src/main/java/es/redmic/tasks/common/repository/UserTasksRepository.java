@@ -9,9 +9,9 @@ package es.redmic.tasks.common.repository;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,11 +36,17 @@ import es.redmic.tasks.ingest.model.status.model.UserTasks;
 @Repository
 public class UserTasksRepository extends RWDataESRepository<UserTasks> {
 
-	private static String[] INDEX = { "user" };
-	private static String[] TYPE = { "tasks" };
+	private static String[] INDEX = { "tasks" };
+	private static String TYPE = "_doc";
 
 	public UserTasksRepository() {
 		super(INDEX, TYPE);
+	}
+
+	@Override
+	public UserTasks update(UserTasks modelToIndex) {
+
+		return elasticPersistenceUtils.update(getIndex()[0], getType(), modelToIndex, modelToIndex.getId().toString());
 	}
 
 	@SuppressWarnings("unchecked")
