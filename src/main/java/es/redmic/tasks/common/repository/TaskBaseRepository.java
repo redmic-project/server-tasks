@@ -9,9 +9,9 @@ package es.redmic.tasks.common.repository;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -51,6 +51,7 @@ import es.redmic.tasks.ingest.model.step.model.CompletedStep;
 import es.redmic.tasks.ingest.model.step.model.RegisteredStep;
 import es.redmic.tasks.ingest.model.step.model.RunningStep;
 import es.redmic.tasks.ingest.model.step.model.StartedStep;
+import ma.glasnost.orika.MappingContext;
 
 public abstract class TaskBaseRepository {
 
@@ -162,7 +163,12 @@ public abstract class TaskBaseRepository {
 
 	public FailedTaskDTO setFailed(IngestBaseException ex) {
 
-		FailedTaskDTO failedTask = orikaMapper.getMapperFacade().convert(ex, FailedTaskDTO.class, null);
+		UserTasks taskFailed = (UserTasks) repository.findById(ex.getTaskId()).get_source();
+
+		MappingContext mappingContext = orikaMapper.getMappingContext();
+		mappingContext.setProperty("task", taskFailed);
+
+		FailedTaskDTO failedTask = orikaMapper.getMapperFacade().convert(ex, FailedTaskDTO.class, null, mappingContext);
 
 		LOGGER.debug("Registrando error en la tarea " + failedTask.getTaskName() + " para el usuario "
 				+ failedTask.getUserId());

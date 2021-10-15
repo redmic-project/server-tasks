@@ -2,26 +2,26 @@ version: '3.5'
 
 services:
   tasks:
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
     deploy:
-      placement:
-        constraints:
-          - node.role == worker
       resources:
         limits:
-          cpus: '1'
-          memory: 2G
+          cpus: '${RESOURCES_LIMITS_CPUS:-1}'
+          memory: ${RESOURCES_LIMITS_MEMORY:-2G}
         reservations:
-          memory: 1639M
+          cpus: '${RESOURCES_RESERVATIONS_CPUS:-0.01}'
+          memory: ${RESOURCES_RESERVATIONS_MEMORY:-1639M}
 
 volumes:
   mediastorage-private-vol:
-    name: mediastorage-private-vol
+    name: ${MEDIASTORAGE_PRIVATE_VOL_NAME:-mediastorage-private-vol}
     driver: "cloudstor:aws"
     driver_opts:
       backing: shared
 
   mediastorage-public-vol:
-    name: mediastorage-public-vol
+    name: ${MEDIASTORAGE_PUBLIC_VOL_NAME:-mediastorage-public-vol}
     driver: "cloudstor:aws"
     driver_opts:
       backing: shared

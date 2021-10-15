@@ -2,17 +2,23 @@ version: '3.5'
 
 services:
   tasks:
+    environment:
+      SPRING_PROFILES_ACTIVE: pre
     deploy:
+      placement:
+        constraints:
+          - node.hostname == ${PLACEMENT_CONSTRAINTS_NODE_HOSTNAME:-hostname}
       resources:
         limits:
-          cpus: '1'
-          memory: 1G
+          cpus: '${RESOURCES_LIMITS_CPUS:-1}'
+          memory: ${RESOURCES_LIMITS_MEMORY:-1G}
         reservations:
-          memory: 820M
+          cpus: '${RESOURCES_RESERVATIONS_CPUS:-0.001}'
+          memory: ${RESOURCES_RESERVATIONS_MEMORY:-820M}
 
 volumes:
   mediastorage-private-vol:
-    name: mediastorage-private-vol
+    name: ${MEDIASTORAGE_PRIVATE_VOL_NAME:-mediastorage-private-vol}
 
   mediastorage-public-vol:
-    name: mediastorage-public-vol
+    name: ${MEDIASTORAGE_PUBLIC_VOL_NAME:-mediastorage-public-vol}
