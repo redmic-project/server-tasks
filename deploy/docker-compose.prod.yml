@@ -5,6 +5,9 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
     deploy:
+      placement:
+        constraints:
+          - node.role == worker
       resources:
         limits:
           cpus: '${RESOURCES_LIMITS_CPUS:-1}'
