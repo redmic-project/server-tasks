@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.9'
 
 services:
   tasks:
@@ -31,7 +31,6 @@ services:
       kafka-net:
       postgres-net:
       redmic-net:
-      traefik-net:
     volumes:
       - mediastorage-private-vol:/data/MEDIA_STORAGE
       - mediastorage-public-vol:/data/PUBLIC_MEDIA_STORAGE
@@ -44,10 +43,6 @@ services:
     deploy:
       mode: replicated
       replicas: ${REPLICAS:-1}
-      labels:
-        traefik.frontend.rule: Host:${PUBLIC_HOSTNAME};PathPrefix:/api/${MICROSERVICE_NAME}
-        traefik.backend: ${MICROSERVICE_NAME}
-        traefik.port: "${MICROSERVICE_PORT}"
       restart_policy:
         delay: ${RESTART_DELAY:-1m}
       update_config:
@@ -72,9 +67,4 @@ networks:
   redmic-net:
     name: ${REDMIC_NET_NAME:-redmic-net}
     driver: ${REDMIC_NET_DRIVER:-overlay}
-    external: true
-
-  traefik-net:
-    name: ${TRAEFIK_NET_NAME:-traefik-net}
-    driver: ${TRAEFIK_NET_DRIVER:-overlay}
     external: true
