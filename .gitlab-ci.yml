@@ -23,9 +23,6 @@ stages:
   - post-package
   - deploy
 
-variables:
-  PROJECT_PARENT_NAME: api
-
 .maven-build:
   variables:
     POSTGRES_IMAGE_TAG: 10.13-alpine
@@ -176,7 +173,5 @@ variables:
 
 .deploy:
   variables:
-    STACK: ${PROJECT_PARENT_NAME}
+    STACK: api
     STATUS_CHECK_DELAY: 300
-  environment:
-    url: https://${PUBLIC_HOSTNAME}/api/${CI_PROJECT_NAME}
