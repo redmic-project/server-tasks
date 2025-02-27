@@ -1,16 +1,6 @@
-version: '3.9'
-
 services:
   tasks:
-    image: ${IMAGE_NAME}:${IMAGE_TAG:-latest}
-    build:
-      context: ..
-      dockerfile: ${DOCKERFILE:-Dockerfile}
-      args:
-        PARENT_IMAGE_NAME:
-        PARENT_IMAGE_TAG:
-        MICROSERVICE_NAME:
-        MICROSERVICE_PORT:
+    image: ${IMAGE_NAME:-registry.gitlab.com/redmic-project/server/tasks}:${IMAGE_TAG:-latest}
     environment:
       MICROSERVICE_NAME:
       MICROSERVICE_PORT:
@@ -25,7 +15,7 @@ services:
       ELASTIC_CLUSTERNAME:
       ELASTIC_USER:
       ELASTIC_PASSWORD:
-      JAVA_OPTS: -XX:MaxRAMFraction=2
+      JAVA_OPTS:
     networks:
       elastic-net:
       kafka-net:
@@ -44,9 +34,9 @@ services:
       mode: replicated
       replicas: ${REPLICAS:-1}
       restart_policy:
-        delay: ${RESTART_DELAY:-1m}
+        delay: ${RESTART_DELAY:-30s}
       update_config:
-        delay: ${UPDATE_DELAY:-2m}
+        delay: ${UPDATE_DELAY:-5m}
 
 networks:
   elastic-net:

@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   tasks:
     environment:
@@ -18,7 +16,7 @@ services:
 
 volumes:
   mediastorage-private-vol:
-    name: ${MEDIASTORAGE_PRIVATE_VOL_NAME:-mediastorage-private-vol}
+    name: ${MEDIASTORAGE_PRIVATE_VOL_NAME}
 
   mediastorage-public-vol:
-    name: ${MEDIASTORAGE_PUBLIC_VOL_NAME:-mediastorage-public-vol}
+    name: ${MEDIASTORAGE_PUBLIC_VOL_NAME}
