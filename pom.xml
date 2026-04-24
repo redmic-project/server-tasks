@@ -32,7 +32,7 @@
 		<jackson-datatype-jts.version>1.0-2.7</jackson-datatype-jts.version>
 		<powermock.version>2.0.9</powermock.version>
 		<orika-core.version>1.5.4</orika-core.version>
-		<kafka.version>2.0.1</kafka.version>
+		<kafka.version>3.9.2</kafka.version>
 	</properties>
 
 	<dependencies>
